@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Garage A.P.C.S — Auto-Moto | Chailly-en-Brie</title>
+  <meta name="description" content="Garage A.P.C.S Auto-Moto à Chailly-en-Brie. Mécanique toutes marques, distribution, embrayage, révision, pneumatiques. Lun-Sam 9h-18h." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,600;0,700;1,300&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'apcs-red':     '#D42B2B',
+            'apcs-red-d':   '#A81E1E',
+            'apcs-dark':    '#1A1A1A',
+            'apcs-anthracite': '#2D2D2D',
+            'apcs-concrete':'#B0ADA8',
+            'apcs-light':   '#E8E5E0',
+            'apcs-steel':   '#6B6763',
+          },
+          fontFamily: {
+            display: ['"Bebas Neue"', 'cursive'],
+            cond:    ['"Barlow Condensed"', 'sans-serif'],
+            body:    ['"Barlow"', 'sans-serif'],
+          },
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* ─── Base reset ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      color: #2D2D2D;
+      background-color: #C8C5BF;
+    }
+
+    /* ─── Concrete texture background ───────────────────────── */
+    .concrete-bg {
+      background-color: #C2BFB9;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E"),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(0,0,0,0.01) 2px,
+          rgba(0,0,0,0.01) 4px
+        );
+    }
+
+    .concrete-dark {
+      background-color: #1E1C1A;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.15'/%3E%3C/svg%3E");
+    }
+
+    /* ─── Typography ─────────────────────────────────────────── */
+    .font-display { font-family: 'Bebas Neue', cursive; }
+    .font-cond    { font-family: 'Barlow Condensed', sans-serif; }
+
+    /* ─── Red stripe accent ──────────────────────────────────── */
+    .red-stripe {
+      position: relative;
+      display: inline-block;
+    }
+    .red-stripe::before {
+      content: '';
+      position: absolute;
+      left: -8px;
+      top: 10%;
+      bottom: 10%;
+      width: 4px;
+      background: #D42B2B;
+    }
+
+    /* ─── Navbar ─────────────────────────────────────────────── */
+    #navbar {
+      transition: all 0.3s ease;
+    }
+    #navbar.scrolled {
+      background: rgba(26,26,26,0.97) !important;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+    }
+
+    /* ─── Hero ───────────────────────────────────────────────── */
+    .hero-bg {
+      background:
+        linear-gradient(135deg, rgba(26,26,26,0.88) 0%, rgba(26,26,26,0.65) 50%, rgba(212,43,43,0.2) 100%),
+        url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1600&q=80') center/cover no-repeat;
+      min-height: 100vh;
+    }
+
+    /* ─── Section divider ────────────────────────────────────── */
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #D42B2B;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', cursive;
+      line-height: 0.95;
+    }
+
+    /* ─── Service cards ──────────────────────────────────────── */
+    .service-card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(4px);
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: #D42B2B;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(212,43,43,0.5);
+      box-shadow: 0 12px 40px rgba(212,43,43,0.15);
+    }
+    .service-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    /* ─── Gallery ────────────────────────────────────────────── */
+    .gallery-item {
+      overflow: hidden;
+      position: relative;
+    }
+    .gallery-item img {
+      transition: transform 0.55s ease;
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .gallery-item:hover img { transform: scale(1.06); }
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(26,26,26,0.7), transparent);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      display: flex; align-items: flex-end; padding: 1rem;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+    /* ─── Scroll reveal ──────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── CTA Buttons ────────────────────────────────────────── */
+    .btn-primary {
+      background: #D42B2B;
+      color: #fff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.85rem 2rem;
+      border: 2px solid #D42B2B;
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn-primary:hover {
+      background: transparent;
+      color: #D42B2B;
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #fff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.85rem 2rem;
+      border: 2px solid rgba(255,255,255,0.5);
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      transition: border-color 0.25s ease, background 0.25s ease;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn-outline:hover {
+      border-color: #fff;
+      background: rgba(255,255,255,0.08);
+    }
+
+    /* ─── Hours table ────────────────────────────────────────── */
+    .hours-row { display: flex; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .hours-row:last-child { border-bottom: none; }
+
+    /* ─── Map placeholder ────────────────────────────────────── */
+    .map-placeholder {
+      background: #2A2825;
+      border: 2px dashed rgba(255,255,255,0.15);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 1rem;
+      color: rgba(255,255,255,0.4);
+      min-height: 300px;
+    }
+
+    /* ─── Mobile nav ─────────────────────────────────────────── */
+    #mobile-menu { transition: max-height 0.3s ease, opacity 0.3s ease; max-height: 0; opacity: 0; overflow: hidden; }
+    #mobile-menu.open { max-height: 400px; opacity: 1; }
+
+    /* ─── Diagonal section break ─────────────────────────────── */
+    .diagonal-top {
+      clip-path: polygon(0 3%, 100% 0, 100% 100%, 0 100%);
+      margin-top: -2px;
+    }
+    .diagonal-bottom {
+      clip-path: polygon(0 0, 100% 0, 100% 97%, 0 100%);
+    }
+
+    /* ─── Scrollbar ──────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #1A1A1A; }
+    ::-webkit-scrollbar-thumb { background: #D42B2B; border-radius: 3px; }
+
+    /* ─── Responsive text ────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .hero-title { font-size: 4rem !important; }
+    }
+  </style>
+</head>
+<body class="concrete-bg">
+
+<!-- ═══════════════════════════════════════════════════
+     NAVBAR
+═══════════════════════════════════════════════════ -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-transparent">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+
+      <!-- Logo -->
+      <a href="#hero" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 bg-apcs-red flex items-center justify-center">
+          <span class="font-display text-white text-sm tracking-wider">APC</span>
+        </div>
+        <div>
+          <div class="font-display text-white text-xl tracking-widest leading-none">A.P.C.S</div>
+          <div class="text-xs text-apcs-concrete font-cond tracking-widest uppercase leading-none">Auto-Moto</div>
+        </div>
+      </a>
+
+      <!-- Desktop nav -->
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#services" class="text-apcs-concrete hover:text-white font-cond font-600 uppercase tracking-widest text-sm transition-colors">Services</a>
+        <a href="#galerie"  class="text-apcs-concrete hover:text-white font-cond font-600 uppercase tracking-widest text-sm transition-colors">Galerie</a>
+        <a href="#infos"    class="text-apcs-concrete hover:text-white font-cond font-600 uppercase tracking-widest text-sm transition-colors">Infos</a>
+        <a href="tel:+33761137252" class="btn-primary text-sm py-2 px-5">
+          <i class="fas fa-phone"></i>
+          <span>07 61 13 72 52</span>
+        </a>
+      </div>
+
+      <!-- Mobile burger -->
+      <button id="burger" class="md:hidden text-white p-2 focus:outline-none" aria-label="Menu">
+        <i id="burger-icon" class="fas fa-bars text-xl"></i>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden concrete-dark pb-4">
+      <div class="flex flex-col gap-4 px-4 pt-4">
+        <a href="#services" class="nav-link text-apcs-concrete font-cond uppercase tracking-widest text-base hover:text-apcs-red transition-colors">Services</a>
+        <a href="#galerie"  class="nav-link text-apcs-concrete font-cond uppercase tracking-widest text-base hover:text-apcs-red transition-colors">Galerie</a>
+        <a href="#infos"    class="nav-link text-apcs-concrete font-cond uppercase tracking-widest text-base hover:text-apcs-red transition-colors">Infos</a>
+        <a href="tel:+33761137252" class="btn-primary justify-center mt-2">
+          <i class="fas fa-phone"></i>07 61 13 72 52
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════════════ -->
+<section id="hero" class="hero-bg flex items-center relative">
+  <!-- Diagonal red bar left -->
+  <div class="absolute left-0 top-0 bottom-0 w-1 bg-apcs-red"></div>
+
+  <div class="max-w-7xl mx-auto px-8 sm:px-12 lg:px-16 pt-24 pb-20 w-full">
+    <div class="max-w-3xl">
+
+      <div class="section-label mb-4 reveal">Ferme de la Florianne · Chailly-en-Brie</div>
+
+      <h1 class="font-display text-white leading-none mb-2 reveal" style="font-size:clamp(3.5rem,10vw,8rem); transition-delay:0.1s">
+        VOTRE GARAGE
+      </h1>
+      <h1 class="font-display leading-none mb-6 reveal" style="font-size:clamp(3.5rem,10vw,8rem); color:#D42B2B; transition-delay:0.2s">
+        DE CONFIANCE
+      </h1>
+
+      <p class="text-apcs-concrete font-body text-lg sm:text-xl max-w-xl leading-relaxed mb-10 reveal" style="transition-delay:0.3s">
+        Mécanique <strong class="text-white">toutes marques</strong> · Auto &amp; Moto · Interventions avec ou sans rendez-vous. Une équipe passionnée à votre service depuis la Seine-et-Marne.
+      </p>
+
+      <div class="flex flex-wrap gap-4 reveal" style="transition-delay:0.4s">
+        <a href="tel:+33761137252" class="btn-primary text-base">
+          <i class="fas fa-phone-alt"></i>
+          Appeler maintenant
+        </a>
+        <a href="#services" class="btn-outline text-base">
+          <i class="fas fa-tools"></i>
+          Nos services
+        </a>
+      </div>
+
+      <!-- Stats bar -->
+      <div class="flex flex-wrap gap-8 mt-14 reveal" style="transition-delay:0.5s">
+        <div>
+          <div class="font-display text-apcs-red text-4xl">6J/7</div>
+          <div class="font-cond text-apcs-concrete uppercase tracking-widest text-xs">Lun → Sam</div>
+        </div>
+        <div class="w-px bg-white/10"></div>
+        <div>
+          <div class="font-display text-apcs-red text-4xl">9H–18H</div>
+          <div class="font-cond text-apcs-concrete uppercase tracking-widest text-xs">Horaires d'ouverture</div>
+        </div>
+        <div class="w-px bg-white/10"></div>
+        <div>
+          <div class="font-display text-apcs-red text-4xl">∞</div>
+          <div class="font-cond text-apcs-concrete uppercase tracking-widest text-xs">Toutes marques</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30 animate-bounce">
+    <i class="fas fa-chevron-down text-sm"></i>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SERVICES
+═══════════════════════════════════════════════════ -->
+<section id="services" class="concrete-dark diagonal-top py-24 px-4">
+  <div class="max-w-7xl mx-auto">
+
+    <div class="text-center mb-16 reveal">
+      <div class="section-label mb-3">Ce que nous faisons</div>
+      <h2 class="section-title text-white" style="font-size: clamp(3rem, 7vw, 5.5rem)">
+        NOS PRESTATIONS
+      </h2>
+      <div class="w-16 h-1 bg-apcs-red mx-auto mt-4"></div>
+    </div>
+
+    <div id="services-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <!-- JS injecté -->
+    </div>
+
+    <div class="text-center mt-12 reveal">
+      <p class="text-apcs-concrete font-cond text-lg tracking-wide mb-6">
+        Un doute ? Une panne ? Appelez-nous directement.
+      </p>
+      <a href="tel:+33761137252" class="btn-primary text-base">
+        <i class="fas fa-phone-alt"></i>
+        07 61 13 72 52
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     GALERIE
+═══════════════════════════════════════════════════ -->
+<section id="galerie" class="py-24 px-4 concrete-bg">
+  <div class="max-w-7xl mx-auto">
+
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4 reveal">
+      <div>
+        <div class="section-label mb-3">L'atelier en images</div>
+        <h2 class="section-title text-apcs-dark" style="font-size: clamp(2.5rem, 6vw, 4.5rem)">
+          NOTRE GALERIE
+        </h2>
+      </div>
+      <p class="text-apcs-steel font-body max-w-sm text-right leading-relaxed hidden md:block">
+        Des interventions de qualité, <br/>un savoir-faire de passionné.
+      </p>
+    </div>
+
+    <div id="gallery-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 auto-rows-fr">
+      <!-- JS injecté -->
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     INFOS : HORAIRES + CARTE
+═══════════════════════════════════════════════════ -->
+<section id="infos" class="concrete-dark diagonal-top py-24 px-4">
+  <div class="max-w-7xl mx-auto">
+
+    <div class="text-center mb-16 reveal">
+      <div class="section-label mb-3">Nous trouver</div>
+      <h2 class="section-title text-white" style="font-size: clamp(2.5rem, 6vw, 4.5rem)">
+        HORAIRES &amp; ACCÈS
+      </h2>
+      <div class="w-16 h-1 bg-apcs-red mx-auto mt-4"></div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+      <!-- Horaires -->
+      <div class="reveal">
+        <div class="bg-white/5 border border-white/10 p-8">
+          <h3 class="font-cond text-white text-2xl font-700 uppercase tracking-widest mb-6 flex items-center gap-3">
+            <span class="w-8 h-8 bg-apcs-red flex items-center justify-center"><i class="fas fa-clock text-white text-sm"></i></span>
+            Horaires d'ouverture
+          </h3>
+          <div id="hours-list">
+            <!-- JS injecté -->
+          </div>
+
+          <div class="mt-8 p-4 border border-apcs-red/40 bg-apcs-red/10">
+            <p class="font-cond text-apcs-red uppercase tracking-wide text-sm font-700">
+              <i class="fas fa-info-circle mr-2"></i>
+              Avec ou sans rendez-vous
+            </p>
+          </div>
+
+          <div class="mt-6 space-y-3">
+            <div class="flex items-start gap-3">
+              <i class="fas fa-map-marker-alt text-apcs-red mt-1 w-4 text-center flex-shrink-0"></i>
+              <span class="text-apcs-concrete font-body" id="address-text"></span>
+            </div>
+            <div class="flex items-center gap-3">
+              <i class="fas fa-phone text-apcs-red w-4 text-center flex-shrink-0"></i>
+              <a href="tel:+33761137252" id="phone-display" class="text-white font-cond text-xl tracking-widest hover:text-apcs-red transition-colors"></a>
+            </div>
+          </div>
+
+          <a href="tel:+33761137252" class="btn-primary w-full justify-center mt-8 text-base">
+            <i class="fas fa-phone-alt"></i>
+            Appeler maintenant
+          </a>
+        </div>
+      </div>
+
+      <!-- Carte -->
+      <div class="reveal" style="transition-delay:0.15s">
+        <div class="h-full min-h-[300px] lg:min-h-0">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2660.5!2d3.0880!3d48.7290!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47ecc0!2sChailly-en-Brie!5e0!3m2!1sfr!2sfr!4v1700000000000"
+            class="w-full h-full min-h-[350px] border-2 border-white/10 grayscale"
+            style="filter: grayscale(0.6) contrast(1.1) invert(0.05);"
+            allowfullscreen=""
+            loading="lazy"
+            title="Localisation Garage APCS Chailly-en-Brie"
+          ></iframe>
+          <div class="mt-3">
+            <a
+              href="https://www.google.com/maps/search/Garage+APCS+Ferme+Florianne+Chailly-en-Brie"
+              target="_blank"
+              rel="noopener"
+              class="btn-outline w-full justify-center text-sm py-3"
+            >
+              <i class="fas fa-directions"></i>
+              Obtenir l'itinéraire
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════ -->
+<footer class="bg-apcs-dark border-t border-white/10 py-10 px-4">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 bg-apcs-red flex items-center justify-center">
+          <span class="font-display text-white text-xs">APC</span>
+        </div>
+        <div>
+          <div class="font-display text-white tracking-widest text-lg leading-none">A.P.C.S</div>
+          <div class="text-xs text-apcs-steel font-cond tracking-widest uppercase leading-none">Auto-Moto</div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <p class="text-apcs-steel text-sm font-body" id="footer-legal"></p>
+        <p class="text-apcs-steel/60 text-xs mt-1 font-body">Ferme de la Florianne · 77120 Chailly-en-Brie</p>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <a href="tel:+33761137252" class="text-apcs-steel hover:text-apcs-red transition-colors">
+          <i class="fas fa-phone text-lg"></i>
+        </a>
+        <a href="#hero" class="w-8 h-8 border border-white/20 flex items-center justify-center text-apcs-steel hover:border-apcs-red hover:text-apcs-red transition-all">
+          <i class="fas fa-chevron-up text-xs"></i>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════════
+     JAVASCRIPT — DATA + LOGIC
+═══════════════════════════════════════════════════ -->
+<script>
+/**
+ * ╔══════════════════════════════════════════════════════╗
+ * ║  DONNÉES MODIFIABLES — Compatible Decap CMS          ║
+ * ║  Toutes les infos métier sont isolées ici.           ║
+ * ╚══════════════════════════════════════════════════════╝
+ */
+const SITE_DATA = {
+
+  // ── Informations générales ──────────────────────────
+  garage: {
+    name:       "Garage A.P.C.S",
+    subtitle:   "Auto-Moto",
+    phone:      "07 61 13 72 52",
+    phoneRaw:   "+33761137252",
+    address:    "Ferme de la Florianne, 77120 Chailly-en-Brie",
+    welcome:    "Votre garagiste de confiance en Seine-et-Marne. Interventions soignées sur tous types de véhicules, avec ou sans rendez-vous.",
+    legal:      "© 2025 Garage A.P.C.S — Auto-entrepreneur — SIRET : 000 000 000 00000",
+  },
+
+  // ── Horaires ────────────────────────────────────────
+  hours: [
+    { day: "Lundi",    am: "09h00 – 12h00", pm: "13h30 – 18h00", open: true  },
+    { day: "Mardi",    am: "09h00 – 12h00", pm: "13h30 – 18h00", open: true  },
+    { day: "Mercredi", am: "09h00 – 12h00", pm: "13h30 – 18h00", open: true  },
+    { day: "Jeudi",    am: "09h00 – 12h00", pm: "13h30 – 18h00", open: true  },
+    { day: "Vendredi", am: "09h00 – 12h00", pm: "13h30 – 18h00", open: true  },
+    { day: "Samedi",   am: "09h00 – 12h00", pm: "13h30 – 18h00", open: true  },
+    { day: "Dimanche", am: "",               pm: "",               open: false },
+  ],
+
+  // ── Services ────────────────────────────────────────
+  services: [
+    {
+      icon:  "fas fa-wrench",
+      title: "Mécanique générale",
+      desc:  "Toutes marques auto et moto. Entretien courant, vidange, freins et plus encore.",
+    },
+    {
+      icon:  "fas fa-cogs",
+      title: "Distribution",
+      desc:  "Remplacement de courroie ou chaîne de distribution dans les règles de l'art.",
+    },
+    {
+      icon:  "fas fa-circle-notch",
+      title: "Embrayage",
+      desc:  "Diagnostic et remplacement de kit embrayage sur tous types de véhicules.",
+    },
+    {
+      icon:  "fas fa-clipboard-check",
+      title: "Révision complète",
+      desc:  "Révision selon les préconisations constructeur. Carnet entretien renseigné.",
+    },
+    {
+      icon:  "fas fa-search",
+      title: "Recherche de panne",
+      desc:  "Diagnostic électronique et mécanique pour localiser tout type de défaillance.",
+    },
+    {
+      icon:  "fas fa-engine",
+      title: "Remplacement moteur",
+      desc:  "Dépose / pose moteur neuf, reconditionné ou d'occasion. Devis sur demande.",
+    },
+    {
+      icon:  "fas fa-tire",
+      title: "Pneumatiques",
+      desc:  "Montage, équilibrage et permutation de pneus toutes dimensions.",
+    },
+    {
+      icon:  "fas fa-motorcycle",
+      title: "Moto & Scooter",
+      desc:  "Entretien et réparation de deux-roues motorisés, toutes cylindrées.",
+    },
+  ],
+
+  // ── Galerie ─────────────────────────────────────────
+  gallery: [
+    { src: "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=600&q=80", alt: "Atelier mécanique", span: "col-span-2 row-span-2" },
+    { src: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80", alt: "Moteur en réparation" },
+    { src: "https://images.unsplash.com/photo-1632823469850-1b78f23a7a36?w=600&q=80", alt: "Outillage professionnel" },
+    { src: "https://images.unsplash.com/photo-1565689157206-0fddef7589a2?w=600&q=80", alt: "Changement de pneu" },
+    { src: "https://images.unsplash.com/photo-1536825211030-094de935f680?w=600&q=80", alt: "Diagnostic électronique" },
+    { src: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=600&q=80", alt: "Voiture en atelier" },
+    { src: "https://images.unsplash.com/photo-1489824904134-891ab64532f1?w=600&q=80", alt: "Moto entretien" },
+  ],
+
+};
+
+// ════════════════════════════════════════════════════════
+//  INJECTION DU CONTENU
+// ════════════════════════════════════════════════════════
+
+// ── Services grid ────────────────────────────────────────
+const servicesGrid = document.getElementById('services-grid');
+SITE_DATA.services.forEach((s, i) => {
+  const card = document.createElement('div');
+  card.className = 'service-card p-6 reveal';
+  card.style.transitionDelay = `${i * 0.07}s`;
+  card.innerHTML = `
+    <div class="w-12 h-12 bg-apcs-red/20 border border-apcs-red/40 flex items-center justify-center mb-5">
+      <i class="${s.icon} text-apcs-red text-xl"></i>
+    </div>
+    <h3 class="font-cond text-white font-700 text-xl uppercase tracking-wide mb-2">${s.title}</h3>
+    <p class="text-apcs-concrete font-body text-sm leading-relaxed">${s.desc}</p>
+  `;
+  servicesGrid.appendChild(card);
+});
+
+// ── Gallery grid ─────────────────────────────────────────
+const galleryGrid = document.getElementById('gallery-grid');
+SITE_DATA.gallery.forEach((img, i) => {
+  const item = document.createElement('div');
+  item.className = `gallery-item reveal ${img.span || ''} aspect-square`;
+  item.style.transitionDelay = `${i * 0.08}s`;
+  item.innerHTML = `
+    <img src="${img.src}" alt="${img.alt}" loading="lazy" />
+    <div class="gallery-overlay">
+      <span class="font-cond text-white text-sm uppercase tracking-widest">${img.alt}</span>
+    </div>
+  `;
+  galleryGrid.appendChild(item);
+});
+
+// ── Hours list ───────────────────────────────────────────
+const hoursList = document.getElementById('hours-list');
+const today = new Date().getDay(); // 0=dim, 1=lun ...
+const dayMap = [6,0,1,2,3,4,5]; // JS day → SITE_DATA.hours index
+
+SITE_DATA.hours.forEach((h, i) => {
+  const isToday = dayMap[today] === i;
+  const row = document.createElement('div');
+  row.className = 'hours-row';
+  row.innerHTML = `
+    <span class="font-cond uppercase tracking-widest text-sm ${isToday ? 'text-apcs-red font-700' : 'text-apcs-concrete'}">
+      ${isToday ? '▶ ' : ''}${h.day}
+    </span>
+    <span class="font-cond text-sm ${h.open ? (isToday ? 'text-white font-700' : 'text-white/80') : 'text-apcs-steel'}">
+      ${h.open ? `${h.am} · ${h.pm}` : 'Fermé'}
+    </span>
+  `;
+  hoursList.appendChild(row);
+});
+
+// ── Infos textuelles ─────────────────────────────────────
+document.getElementById('address-text').textContent  = SITE_DATA.garage.address;
+document.getElementById('phone-display').textContent = SITE_DATA.garage.phone;
+document.getElementById('footer-legal').textContent  = SITE_DATA.garage.legal;
+
+// ════════════════════════════════════════════════════════
+//  NAVBAR — scroll effect + mobile menu
+// ════════════════════════════════════════════════════════
+const navbar      = document.getElementById('navbar');
+const burger      = document.getElementById('burger');
+const burgerIcon  = document.getElementById('burger-icon');
+const mobileMenu  = document.getElementById('mobile-menu');
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 60) navbar.classList.add('scrolled');
+  else navbar.classList.remove('scrolled');
+});
+
+burger.addEventListener('click', () => {
+  mobileMenu.classList.toggle('open');
+  burgerIcon.className = mobileMenu.classList.contains('open')
+    ? 'fas fa-times text-xl'
+    : 'fas fa-bars text-xl';
+});
+
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    burgerIcon.className = 'fas fa-bars text-xl';
+  });
+});
+
+// ════════════════════════════════════════════════════════
+//  SCROLL REVEAL
+// ════════════════════════════════════════════════════════
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+const revealAll = () => {
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+};
+
+// Wait for dynamic content to be injected
+setTimeout(revealAll, 100);
+</script>
+
+</body>
+</html>

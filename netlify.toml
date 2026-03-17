@@ -1,0 +1,28 @@
+# ════════════════════════════════════════════════════
+#  Netlify — Configuration Garage A.P.C.S
+# ════════════════════════════════════════════════════
+
+[build]
+  publish = "."          # Le dossier racine contient index.html
+  command = ""           # Pas de build step (site statique pur)
+
+# ── Redirections pour le CMS ──────────────────────
+[[redirects]]
+  from = "/admin"
+  to   = "/admin/index.html"
+  status = 200
+
+# ── Headers de sécurité ──────────────────────────
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options       = "DENY"
+    X-XSS-Protection      = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy       = "strict-origin-when-cross-origin"
+
+# ── Cache assets statiques ────────────────────────
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
